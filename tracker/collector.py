@@ -81,7 +81,7 @@ def run_collector(stop_event):
     while not stop_event.is_set():
         try:
             app_name, title, is_idle = collect_once()
-            storage.record_tick(app_name, title, is_idle, time.time())
+            storage.record_tick(app_name, title, is_idle, time.time(), POLL_INTERVAL_SECONDS)
         except Exception as exc:  # keep the collector alive across transient errors
             print(f"[collector] error: {exc}")
         stop_event.wait(POLL_INTERVAL_SECONDS)

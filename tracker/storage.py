@@ -67,8 +67,15 @@ def insert_session(conn, app_name, window_title, is_idle, start_ts, end_ts):
     conn.commit()
 
 
-def record_tick(app_name, window_title, is_idle, now):
-    """Extends the open session if it matches, otherwise starts a new one."""
+def record_tick(app_name, window_title, is_idle, now, poll_interval):
+    """Extends the open session if it matches, otherwise starts a new one.
+
+    A brand-new session is backdated by one poll interval rather than
+    stamped as a zero-length point: a tick is a sample representing the
+    interval since the last one, so even an app seen for a single tick
+    (e.g. a few seconds' glance) gets a real, visible duration instead of
+    silently vanishing from the dashboard.
+    """
     with get_conn() as conn:
         latest = get_latest_session(conn)
         if (
@@ -79,7 +86,10 @@ def record_tick(app_name, window_title, is_idle, now):
         ):
             extend_session(conn, latest[0], now, window_title)
         else:
-            insert_session(conn, app_name, window_title, is_idle, now, now)
+            start_ts = now - poll_interval
+            if latest and start_ts < latest[5]:
+                start_ts = latest[5]  # never overlap the prior session
+            insert_session(conn, app_name, window_title, is_idle, start_ts, now)
 
 
 def query_range(day_start_ts, day_end_ts):

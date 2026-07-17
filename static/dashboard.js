@@ -228,8 +228,8 @@
 
     const isToday = dateStr === todayStr();
     subtitle.textContent = isToday
-      ? "What you've actually spent time on today."
-      : `What you spent time on — ${dateStr}.`;
+      ? "Time by app today."
+      : `Time by app — ${dateStr}.`;
 
     const { folded: appFolded, map: appColors } = buildColorMap(data.per_app);
     renderBars(appBarsEl, appFolded, appColors, data.active_seconds);

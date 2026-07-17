@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Productivity Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main>
+    <h1>Productivity Tracker</h1>
+    <p class="subtitle" id="subtitle">What you've actually spent time on today.</p>
+
+    <div class="filters">
+      <button type="button" id="btn-today" class="active">Today</button>
+      <button type="button" id="btn-yesterday">Yesterday</button>
+      <input type="date" id="date-input">
+    </div>
+
+    <div class="stats">
+      <div class="stat-tile">
+        <div class="label">Active time</div>
+        <div class="value" id="stat-active">&mdash;</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">Idle time</div>
+        <div class="value" id="stat-idle">&mdash;</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">Top app</div>
+        <div class="value" id="stat-top">&mdash;</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Time by app</h2>
+      <div id="app-bars"></div>
+    </div>
+
+    <div class="card">
+      <h2>Time by category</h2>
+      <div id="category-bars"></div>
+    </div>
+
+    <div class="card">
+      <h2>Timeline</h2>
+      <div class="timeline-wrap">
+        <canvas id="timeline-canvas"></canvas>
+      </div>
+      <div class="timeline-axis">
+        <span>12a</span><span>3a</span><span>6a</span><span>9a</span>
+        <span>12p</span><span>3p</span><span>6p</span><span>9p</span><span>12a</span>
+      </div>
+      <div class="legend" id="timeline-legend"></div>
+    </div>
+  </main>
+
+  <div id="tooltip"></div>
+
+  <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>

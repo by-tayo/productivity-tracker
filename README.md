@@ -4,6 +4,9 @@ Logs which app/window has focus and how much of the day is idle vs. active.
 Dashboard at `http://127.0.0.1:5151`. All data stays local in
 `data/activity.db` (SQLite).
 
+<img width="1837" height="1900" alt="image" src="https://github.com/user-attachments/assets/a0fce1f5-596a-4781-aebb-3ed499c132e9" />
+
+
 ## Run it
 
 ```powershell
